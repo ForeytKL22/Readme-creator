@@ -6,19 +6,20 @@ const generateMarkdown = require('./utils/generateMarkdown');
 
 
 
+
 // // TODO: Create a function to write README file
 // function writeToFile(fileName, data) {}
 
 const writeFile = fileContent => {
     return new Promise ((resolve, reject) => {
-        fs.writeFile('./dist/readme.md', fileConent, err => {
+        fs.writeFile('./dist/readme.md', generateMarkdown(fileContent), err => {
             if (err) {
                 reject(err);
                 return;
             }
 
             resolve({
-                ok:true,
+                ok: true,
                 message: 'File created!'
             });
         });
@@ -84,16 +85,20 @@ const promptQuestions = () => {
         name: 'contribution',
         message: 'Please name all contribuing members:'
     },
-
     // contribution guidelines
     {
         type: 'input',
-        name: 'contribution-guidelines',
+        name: 'contributionReqs',
         message: 'Provide your requirements for contribution to this project'
     },
 
     // tests
-
+    {
+        type: 'input',
+        name: 'tests',
+        message: 'What command should be run to run tests?',
+        default: 'npm test'
+    },
 
     //questions - github and email
     {
@@ -109,7 +114,6 @@ const promptQuestions = () => {
             }
         }
     },
-
     {
         type: 'input',
         name: 'email',
@@ -122,11 +126,11 @@ const promptQuestions = () => {
 // Function call to initialize app
 promptQuestions()
     .then(createTemplate => {
-
+        writeFile(createTemplate);
     })
-    .then(writeFile => {
-        writeFile(writeFile);
-    })
+    // .then(writeFile => {
+    //     writeFile(createTemplate);
+    // })
     .catch(err => {
         console.log(err);
     });

@@ -5,8 +5,6 @@ const generateMarkdown = require('./utils/generateMarkdown');
 
 
 
-
-
 // // TODO: Create a function to write README file
 // function writeToFile(fileName, data) {}
 
@@ -73,10 +71,10 @@ const promptQuestions = () => {
     },
     // license (checkbox)
     {
-        type: 'checkbox',
+        type: 'list',
         name: 'licenses',
-        message: 'Select a license: (select all that apply)',
-        choices: ['MIT', 'Apache 2.0', 'GNU GPLv3', 'ISC']
+        message: 'Select a license:',
+        choices: ['MIT', 'Apache2.0', 'GNU GPLv3', 'ISC']
     }, 
 
     // contributing
@@ -97,7 +95,7 @@ const promptQuestions = () => {
         type: 'input',
         name: 'tests',
         message: 'What command should be run to run tests?',
-        default: 'npm test'
+        default: 'npm run test'
     },
 
     //questions - github and email
@@ -116,7 +114,7 @@ const promptQuestions = () => {
     },
     {
         type: 'input',
-        name: 'email',
+        name: 'contact',
         message: 'Provide your email address or other preferred contact information:'
     },
   ])
@@ -128,9 +126,6 @@ promptQuestions()
     .then(createTemplate => {
         writeFile(createTemplate);
     })
-    // .then(writeFile => {
-    //     writeFile(createTemplate);
-    // })
     .catch(err => {
         console.log(err);
     });
